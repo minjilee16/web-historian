@@ -30,47 +30,26 @@ exports.initialize = function(pathsObj) {
 exports.readListOfUrls = function(callback) {
   // find file with URLS 
   // return the contents 
-
-  // fs.readFileSyne returns the value we expect
-  
   var path = exports.paths.list;
-
-  var str = fs.readFile(path, 'utf8', callback );
-  // var str = fs.readFile(path, 'utf8'); 
-  console.log('***************str', str);
-  // return str;
-console.log("Carry on executing");
-
-  // console.log('PATHs*************************', path  );
-  // console.log('callback*************************', callback  );
-  // console.log('read*************************',fs.readFile(path, 'utf8', callback )  );
+  var str= fs.readFile(path, 'utf8',function(error, data) {
+    if (error) { 
+      return console.error(error);
+    } else { 
+      callback(data.split("\n"));
+    } 
+  });
 };
-console.log("Carry on executing");
-// exports.readListOfUrls(function(urls) {
-//   urls=exports.paths.list
-//         expect(urls).to.deep.equal(urlArray);
-//         done();
-//   });
 
-
-// var fs = require('fs');
-
-//     var fileName = 'readme.txt';
-//     var str = fs.readFile(fileName, 'utf8', function (err, data) {
-//         if (err) {
-//             console.log(err);
-//             throw err;
-//         }
-//        console.log('result read: ' + data);
-//     });
-
-
-// var str = fs.readFileSync(fileName, 'utf8');
-// console.log('result read: ' + str);
-
-
+// 1) 
+// input: url, callback function 
+// ouput: boolean 
 
 exports.isUrlInList = function(url, callback) {
+  // access the file 
+  // get the data 
+  // iterate the data 
+  // 
+
 };
 
 exports.addUrlToList = function(url, callback) {
