@@ -74,30 +74,52 @@ exports.isUrlInList = function(url, callback) {
 
 
 exports.addUrlToList = function(url, callback) {
-  //   // access the file 
-  // // var path = exports.paths.list; 
-  // // get the data 
-  // fs.readFile(exports.paths.list, 'utf8',function(error, data) {
-  //   if (error) { 
-  //     console.log(error);
-  //   } else { 
-  //     // split the data into an array by line break 
-  //     var dataStorage = data.split('\n');
-  //     (console.log('dataStorage', dataStorage)); 
-  //     // declare new variable as false 
-  //     var result = false;
-  //     // iterate data storage 
-  //     for (var i =0; i< dataStorage.length; i++) {
-  //       // check if data storage contains url 
-  //       if( dataStorage[i] === url ){
-  //         //reassign the variable to ture; 
-  //         result = true; 
-  //       }
-  //     }
-  //     // pass the result to callback funciton 
-  //     callback(result);
-  //   } 
-  // });
+    // access the file 
+  // var path = exports.paths.list; 
+  // get the data 
+  fs.readFile(exports.paths.list, 'utf8',function(error, data) {
+    if (error) { 
+      console.log(error);
+    } else { 
+      // split the data into an array by line break 
+      // consolelog('dataStorage', dataStorage);
+      var dataStorage = data.split('\n');
+      // declare new variable as false 
+      for (var i = 0; i < dataStorage.length-1; i++){
+        if( dataStorage.indexOf(url) !== -1 ) {
+          dataStorage[i] = url; 
+        } else  {
+          dataStorage[dataStorage.length-1] = url; 
+        }
+      }
+
+
+    
+      (console.log('after', dataStorage ));
+
+      //  // declare new variable as false 
+      // var result = false;
+      // // iterate data storage 
+      // for (var i =0; i< dataStorage.length; i++) {
+      //   // check if data storage contains url 
+      //   if( dataStorage[i] === url ){
+      //     //reassign the variable to ture; 
+      //     result = true; 
+      //   }
+      // }
+      // // pass the result to callback funciton 
+      // callback();
+
+
+
+
+
+
+
+
+      callback(); 
+    } 
+  });
 
 };
 
