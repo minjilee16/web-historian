@@ -47,14 +47,26 @@ exports.readListOfUrls = function(callback) {
 
 exports.isUrlInList = function(url, callback) {
   // access the file 
-  var path = exports.paths.list; 
+  // var path = exports.paths.list; 
   // get the data 
-  fs.readFile(path, 'utf8',function(error, data) {
+  fs.readFile(exports.paths.list, 'utf8',function(error, data) {
     if (error) { 
-      console.error(error);
+      console.log(error);
     } else { 
+      // split the data into an array by line break 
       var dataStorage = data.split('\n');
-      dataStorage.forEach((datum) => callback(datum === url));
+      // declare new variable as false 
+      var result = false;
+      // iterate data storage 
+      for (var i =0; i< dataStorage.length; i++) {
+        // check if data storage contains url 
+        if( dataStorage[i] === url ){
+          //reassign the variable to ture; 
+          result = true; 
+        }
+      }
+      // pass the result to callback funciton 
+      callback(result);
     } 
   });
 };
@@ -62,6 +74,31 @@ exports.isUrlInList = function(url, callback) {
 
 
 exports.addUrlToList = function(url, callback) {
+  //   // access the file 
+  // // var path = exports.paths.list; 
+  // // get the data 
+  // fs.readFile(exports.paths.list, 'utf8',function(error, data) {
+  //   if (error) { 
+  //     console.log(error);
+  //   } else { 
+  //     // split the data into an array by line break 
+  //     var dataStorage = data.split('\n');
+  //     (console.log('dataStorage', dataStorage)); 
+  //     // declare new variable as false 
+  //     var result = false;
+  //     // iterate data storage 
+  //     for (var i =0; i< dataStorage.length; i++) {
+  //       // check if data storage contains url 
+  //       if( dataStorage[i] === url ){
+  //         //reassign the variable to ture; 
+  //         result = true; 
+  //       }
+  //     }
+  //     // pass the result to callback funciton 
+  //     callback(result);
+  //   } 
+  // });
+
 };
 
 exports.isUrlArchived = function(url, callback) {
