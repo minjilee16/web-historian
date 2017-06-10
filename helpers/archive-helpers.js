@@ -33,12 +33,13 @@ exports.readListOfUrls = function(callback) {
   var path = exports.paths.list;
   var str= fs.readFile(path, 'utf8',function(error, data) {
     if (error) { 
-      return console.error(error);
+      console.error(error);
     } else { 
       callback(data.split("\n"));
     } 
   });
 };
+
 
 // 1) 
 // input: url, callback function 
@@ -46,11 +47,19 @@ exports.readListOfUrls = function(callback) {
 
 exports.isUrlInList = function(url, callback) {
   // access the file 
+  var path = exports.paths.list; 
   // get the data 
-  // iterate the data 
-  // 
-
+  fs.readFile(path, 'utf8',function(error, data) {
+    if (error) { 
+      console.error(error);
+    } else { 
+      var dataStorage = data.split('\n');
+      dataStorage.forEach((datum) => callback(datum === url));
+    } 
+  });
 };
+
+
 
 exports.addUrlToList = function(url, callback) {
 };
