@@ -74,8 +74,7 @@ exports.isUrlInList = function(url, callback) {
 
 exports.addUrlToList = function(url, callback) {
   // access the file 
-  fs.readFile ( exports.paths.archivedSites, 'utf8', function(error, data) {
-    console.log('archivedSites', archivedSites); 
+  fs.readFile(exports.paths.list, 'utf8',function(error, data) {
     if (error) { 
       console.error(error);
     } else { 
@@ -90,39 +89,54 @@ exports.addUrlToList = function(url, callback) {
   });
 };
 
+
+
+
+
+
+
+
+   // if (err) {
+   //     //and the error is that the file does not exist
+   //     if(err = 'ENOENT') {
+   //       //console that error
+   //       console.log('file does not exist');
+   //       //pass false into the callback
+   //       callback(false);
+   //     } else {
+   //       //return information on the error
+   //       console.log(err);
+   //     }
+     
+
+
+
 // explanation 
 // check if the url is in archrived 
 exports.isUrlArchived = function(url, callback) {
-  // get the archived path 
-  // check archive storage has url 
-  
-
-
-
-
-  
-  //  fs.readFile(exports.paths.list, 'utf8',function(error, data) {
-  //   if (error) { 
-  //     console.log(error);
-  //   } else { 
-  //     // split the data into an array by line break 
-  //     var dataStorage = data.split('\n');
-  //     // declare new variable as false 
-  //     var result = false;
-  //     // iterate data storage 
-  //     for (var i =0; i< dataStorage.length; i++) {
-  //       // check if data storage contains url 
-  //       if( dataStorage[i] === url ){
-  //         //reassign the variable to ture; 
-  //         result = true; 
-  //       }
-  //     }
-  //     // pass the result to callback funciton 
-  //     callback(result);
-  //   } 
-  // });
-
+ // initialize search for archived sites through archived path for stored url data
+ fs.readFile(exports.paths.archivedSites + '/' + url, 'utf8', function(err, data) {
+     //if there is an error in retrieving the data
+     if (err) {
+       //and the error is that the file does not exist
+       if(err = 'ENOENT') {
+         //pass false into the callback
+         callback(false);
+       } else {
+         //return error information on the error
+         console.log(err);
+       }
+    //otherwise, if the data was retrieved successfully
+     } else {
+     //pass true into the callback 
+       callback(true);
+     }
+   });
 };
+
 
 exports.downloadUrls = function(urls) {
 };
+
+
+
