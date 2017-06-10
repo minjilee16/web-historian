@@ -80,15 +80,18 @@ exports.addUrlToList = function(url, callback) {
     } else { 
       // split the data converting to an array 
       var dataStorage = data.split("\n");
-      // write nwe url at the last element of dataStorage 
-      fs.writeFileSync(exports.paths.list, dataStorage[dataStorage.length-1]=url);
-      // invoke the callback function 
-      callback(); 
+      // if the url doesn't exist at data storage 
+      if(dataStorage.indexOf(url) === -1 ) {
+        // write nwe url at the last element of dataStorage 
+        fs.writeFile(exports.paths.list, dataStorage[dataStorage.length-1]=url, callback);
+      }
     } 
   });
 };
 
 exports.isUrlArchived = function(url, callback) {
+
+
 };
 
 exports.downloadUrls = function(urls) {
