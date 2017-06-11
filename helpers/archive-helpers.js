@@ -1,7 +1,8 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
-
+var http= require('http'); 
+var request = require('request');
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
  * Consider using the `paths` object below to store frequently used file paths. This way,
@@ -91,52 +92,103 @@ exports.addUrlToList = function(url, callback) {
 
 
 
-
-
-
-
-
-   // if (err) {
-   //     //and the error is that the file does not exist
-   //     if(err = 'ENOENT') {
-   //       //console that error
-   //       console.log('file does not exist');
-   //       //pass false into the callback
-   //       callback(false);
-   //     } else {
-   //       //return information on the error
-   //       console.log(err);
-   //     }
-     
-
-
-
 // explanation 
 // check if the url is in archrived 
 exports.isUrlArchived = function(url, callback) {
  // initialize search for archived sites through archived path for stored url data
- fs.readFile(exports.paths.archivedSites + '/' + url, 'utf8', function(err, data) {
+  fs.readFile(exports.paths.archivedSites + '/' + url, 'utf8', function(err, data) {
      //if there is an error in retrieving the data
-     if (err) {
+    if (err) {
        //and the error is that the file does not exist
-       if(err = 'ENOENT') {
+      if(err = 'ENOENT') {
          //pass false into the callback
-         callback(false);
-       } else {
+        callback(false);
+      } else {
          //return error information on the error
-         console.log(err);
-       }
+        console.log(err);
+      }
     //otherwise, if the data was retrieved successfully
-     } else {
+    } else {
      //pass true into the callback 
-       callback(true);
-     }
-   });
+      callback(true);
+    }
+  });
 };
+
+
+// exports.downloadUrls = function(urls) {
+//   // Iterate over urls and pipe to new files
+//   _.each(urls, function (url) {
+//     if (!url) { return; }
+//     request('http://' + url).pipe(fs.createWriteStream(exports.paths.archivedSites + '/' + url));
+//   });
+// };
 
 
 exports.downloadUrls = function(urls) {
+ // url we are given we can assume those are pending urls
+ // iterate the urls array 
+ // get request to each url using http get method 
+ // option argument will be an object having hostname as url and path as index.html 
+ // write file of each url 
+  for(var i = 0; i < urls.length; i++) {
+    if( !urls[i] ) {
+      return; 
+    }
+    request( 'http://' + urls[i] ).pipe( fs.createWriteStream(exports.paths.archivedSites + '/' + urls[i]))
+  }
+
+// exports.paths.archivedSites
+  
+
+  // console.log(fs.createWriteStream(exports.paths.archivedSites) )
+  // for(var i = 0; i < urls.length; i++) {
+  //   // console.log('urls',fs.createWriteStream(exports.paths.archivedSites))
+  //   request.stream(urls[i], function(response) {
+  //     response.pipe(file);
+  //     // console.log('responseeee',response.pipe(file));
+  //   });
+  // }
+
+  // for(var i= 0; i < urls.lengt)
+
+// var request = http.get("http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg", function(response) {
+//   response.pipe(file);
+// });
+  
+
+  // var file = fs.createWriteStream(exports.paths.archivedSites);
+
+  // for(var i =0; i< urls.length; i++) {
+
+  //   request(urls[i], function (error,response,body) {
+  //     console.log('error:', error); // Print the error if one occurred
+  //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  //     console.log('body:', body); // Print the HTML for the Google homepage.
+  //   }).pipe(fs.createWriteStream(exports.paths.archivedSites))
+  // }
+
+// var request = require('request');
+// request('http://www.google.com', function (error, response, body) {
+ 
+// var download = function(url, dest, cb) {
+//   var file = fs.createWriteStream('/index.html');
+//   var request = http.get(url, function(response) {
+//     response.pipe(file);
+//     file.on('finish', function() {
+//       file.close(cb);  // close() is async, call cb after close completes.
+//     });
+//   }).on('error', function(err) { // Handle errors
+//     fs.unlink(dest); // Delete the file async. (But we don't check the result)
+//     if (cb) cb(err.message);
+//   });
+// };
+
+
+
 };
+
+
 
 
 
